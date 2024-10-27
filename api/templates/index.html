@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWatch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="EcoWatch Logo" style="height: 60px;">
+        <h1>EcoWatch</h1>
+        <nav>
+            <a href="#">Environmental Conditions</a>
+            <a href="#">Action Plans</a>
+            <a href="#">Remediation</a>
+            <input type="text" placeholder="Enter location for search">
+            <button>Quick Search</button>
+        </nav>
+    </header>
+    <main>
+        <h2>Explore the World's Environmental Conditions</h2>
+        <p>AI-Driven Environmental Monitoring and Action Planning for Ecosystem Conservation</p>
+        <div class="globe-container">
+            
+            <div class="feature-cards">
+                <div class="card">Endangered Species Monitoring</div>
+                <div class="card">Deforestation Trends Analysis</div>
+                <div class="card">Collaboration for Remediation</div>
+                </div>
+                <div id="globeViz">
+                </div> 
+                <script type="module">
+                    import * as THREE from '//unpkg.com/three/build/three.module.js';
+                
+                    const world = Globe()
+                      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+                      .backgroundColor("#ffffff00")
+                      .width(600)
+                      .height(600)
+                      (document.getElementById('globeViz'));
+                
+                    // custom globe material
+                    const globeMaterial = world.globeMaterial();
+                    globeMaterial.bumpScale = 10;
+                    new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-water.png', texture => {
+                      globeMaterial.specularMap = texture;
+                      globeMaterial.specular = new THREE.Color('grey');
+                      globeMaterial.shininess = 15;
+                    });
+                
+                    const directionalLight = world.lights().find(light => light.type === 'DirectionalLight');
+                    directionalLight && directionalLight.position.set(1, 1, 1); // change light position to see the specularMap's effect
+                  </script>
+                <div class="feature-cards">
+                <div class="card">Climate Change Impact Modeling</div>
+                <div class="card">Simulations and Summarization</div>
+                <div class="card">Action Planning</div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Company. All rights reserved.</p>
+    </footer>
+    </body>
+</html>

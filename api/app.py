@@ -1,11 +1,10 @@
-# api/app.py
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Welcome to EcoWatch API!"})
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
