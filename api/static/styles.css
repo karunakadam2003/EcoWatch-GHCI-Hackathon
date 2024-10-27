@@ -42,7 +42,6 @@ p {
     color: #555;
 }
 
-/* Container for the Globe and Cards */
 .globe-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -60,6 +59,20 @@ p {
     max-width: 100%;
     max-height: 100%;
     grid-column: 2 / 3;
+}
+
+#setButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1e3a5f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#setButton:hover {
+    background-color: #174356;
 }
 
 .feature-cards {
