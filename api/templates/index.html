@@ -31,81 +31,7 @@
                 <div class="card">Deforestation Trends Analysis</div>
                 <div class="card">Collaboration for Remediation</div>
                 </div>
-                <div id="globeViz"></div>
-                <script type="module">
-                    import * as THREE from '//unpkg.com/three/build/three.module.js';
-                
-                    const world = Globe()
-                      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-                      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-                      .backgroundColor("#ffffff00")
-                      .width(600)
-                      .height(600)
-                      (document.getElementById('globeViz'));
-                
-                    const globeMaterial = world.globeMaterial();
-                    globeMaterial.bumpScale = 10;
-                    new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-water.png', texture => {
-                      globeMaterial.specularMap = texture;
-                      globeMaterial.specular = new THREE.Color('grey');
-                      globeMaterial.shininess = 15;
-                    });
-                
-                    const directionalLight = world.lights().find(light => light.type === 'DirectionalLight');
-                    directionalLight && directionalLight.position.set(1, 1, 1);
-                
-                    // draggable marker
-                    const marker = { lat: 0, lng: 0, size: 0.5, color: 'red' };
-                    let isDragging = false;
-                
-                    world
-                        .pointsData([marker])
-                        .pointAltitude(d => d.size)
-                        .pointColor(d => d.color);
-                
-                    world.onGlobeClick(({ lat, lng }) => {
-                        marker.lat = lat;
-                        marker.lng = lng;
-                        world.pointsData([marker]);
-                        isDragging = true;
-                    });
-                
-                    world.onGlobePointerMove(({ lat, lng }) => {
-                        if (isDragging) {
-                            marker.lat = lat;
-                            marker.lng = lng;
-                            world.pointsData([marker]);
-                        }
-                    });
-                
-                    world.onGlobePointerUp(() => {
-                        isDragging = false;
-                    });
-                
-                    // "Set" button click event to send coordinates to the backend
-                    document.getElementById("setButton").addEventListener("click", () => {
-                        console.log("Set button clicked");
-                        console.log(`Latitude: ${marker.lat}, Longitude: ${marker.lng}`);
-                
-                        fetch('/set-location', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ lat: marker.lat, lng: marker.lng })
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error("Network response was not ok");
-                            }
-                            return response.json();
-                        })
-                        .then(data => console.log("Location set:", data))
-                        .catch(error => console.error("Error:", error));
-                    });
-                </script>
-                
-            
+                <div id="globeViz"></div>         
                 <div class="feature-cards">
                 <div class="card">Climate Change Impact Modeling</div>
                 <div class="card">Simulations and Summarization</div>
@@ -116,5 +42,7 @@
     <footer>
         <p>&copy; 2024 Company. All rights reserved.</p>
     </footer>
+    <script type="module" src="{{ url_for('static', filename='main.js') }}" ></script>
+                
     </body>
 </html>
