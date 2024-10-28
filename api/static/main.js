@@ -29,6 +29,7 @@ world.onGlobeClick(({ lat, lng }) => {
 document.getElementById("setButton").addEventListener("click", () => {
     console.log(`Set button clicked with Latitude: ${marker.lat}, Longitude: ${marker.lng}`);
     
+    // Send coordinates to the backend
     fetch('/set-location', {
         method: 'POST',
         headers: {
@@ -37,6 +38,18 @@ document.getElementById("setButton").addEventListener("click", () => {
         body: JSON.stringify({ lat: marker.lat, lng: marker.lng })
     })
     .then(response => response.json())
-    .then(data => console.log("Location set:", data))
+    .then(data => {
+        console.log("Location set:", data);
+
+        // Display the message box with coordinates
+        const messageBox = document.getElementById("messageBox");
+        messageBox.style.display = 'block';
+        messageBox.textContent = `Coordinates added successfully! Latitude: ${data.latitude}, Longitude: ${data.longitude}`;
+
+        // Hide the message box after a few seconds (optional)
+        setTimeout(() => {
+            messageBox.style.display = 'none';
+        }, 5000);  // Hide after 5 seconds
+    })
     .catch(error => console.error("Error:", error));
 });
